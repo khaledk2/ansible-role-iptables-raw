@@ -7,6 +7,22 @@
     update_cache: true
     name: iptables-nft-services
     state: present
+  when: not install_legacy_service
+
+- name: iptables-raw | install epel repo
+  become: true
+  ansible.builtin.dnf:
+    name: epel-release
+    state: present
+  when: install_legacy_service
+
+- name: iptables-raw | install install_legacy iptables
+  become: true
+  ansible.builtin.dnf:
+    update_cache: true
+    name: iptables-legacy
+    state: present
+  when: install_legacy_service
 
 - name: iptables-raw | get list of services
   become: true
