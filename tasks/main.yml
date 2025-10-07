@@ -4,7 +4,6 @@
 - name: iptables-raw | install iptables services
   become: true
   ansible.builtin.dnf:
-    update_cache: true
     name: iptables-nft-services
     state: present
 
@@ -14,7 +13,7 @@
 
 - name: iptables-raw | disable firewalld
   become: true
-  service:
+  ansible.builtin.service:
     name: firewalld
     state: stopped
     enabled: false
@@ -26,7 +25,7 @@
 
 - name: iptables-raw | enable iptables
   become: true
-  service:
+  ansible.builtin.service:
     name: iptables
     state: started
     enabled: true
